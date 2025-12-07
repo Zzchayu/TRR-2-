@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pruebas Cognitivas — Versión Moderna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0f172440;
+    --panel:#0b1220;
+    --glass: rgba(255,255,255,0.04);
+    --accent: #6ee7b7;
+    --accent-2: #60a5fa;
+    --muted: #9aa4b2;
+    --white: #e6eef6;
+    --danger: #ff7b7b;
+    --card-radius: 14px;
+    --gap: 14px;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Arial,sans-serif;
+    background:linear-gradient(180deg,#071026 0%, #0f1724 100%);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:28px;
+  }
+
+  .container{max-width:1100px;margin:0 auto}
+  header.main{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+  }
+  .title{
+    display:flex;flex-direction:column;
+  }
+  .title h1{margin:0;font-size:20px;font-weight:700}
+  .title p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--card-radius);
+    padding:18px;
+    box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    margin-bottom:20px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 340px;
+    gap:18px;
+    align-items:start;
+  }
+
+  .menu button{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:none;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#072033;
+    font-weight:600;
+    cursor:pointer;
+    margin-bottom:10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+
+  .menu .secondary{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--white);
+    font-weight:600;
+  }
+
+  .hidden{display:none!important}
+
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input[type="text"], input[type="number"], select, textarea{
+    width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:var(--white);outline:none;font-size:15px;
+  }
+  textarea{min-height:100px;resize:vertical}
+
+  .small{font-size:13px;color:var(--muted)}
+
+  .center{display:flex;align-items:center;justify-content:center;gap:10px}
+
+  .bigword{
+    font-weight:700;font-size:42px;
+    letter-spacing:1px;color:var(--white);
+    padding:18px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+    display:inline-block;min-width:220px;text-align:center;
+  }
+
+  .ops button{
+    display:block;width:100%;padding:12px;margin:8px 0;border-radius:10px;border:none;
+    background:rgba(255,255,255,0.03);color:var(--white);font-weight:600;cursor:pointer;
+  }
+  .ops button:hover{transform:translateY(-2px);transition:all .12s ease}
+
+  .status{
+    display:flex;gap:10px;align-items:center;color:var(--muted);font-size:14px;
+  }
+
+  .result-bubble{
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+  }
+
+  footer{color:var(--muted);text-align:center;margin-top:18px;font-size:13px}
+
+  /* responsive */
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr; padding:0 6px}
+    .title h1{font-size:18px}
+    .bigword{font-size:34px}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="main">
+      <div class="title">
+        <h1>Pruebas Cognitivas Completas — Modern</h1>
+        <p class="small">Completa las pruebas en orden. Guarda o exporta resultados al final.</p>
+      </div>
+      <div class="small">Diseño: versión C · <span id="userBadge">Sin usuario</span></div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: Workspace -->
+      <main>
+        <!-- Registro -->
+        <section id="registro" class="card">
+          <h3>Registro</h3>
+          <label>Nombre</label>
+          <input id="nom" type="text" placeholder="Tu nombre">
+          <label>Edad</label>
+          <input id="ed" type="number" placeholder="Edad">
+          <label>Grupo</label>
+          <select id="grupo">
+            <option value="0">Nunca he consumido cannabis en adolescencia.</option>
+            <option value="1">Consumí en adolescencia pero lo dejé.</option>
+            <option value="2">Consumí en adolescencia, lo dejé y consumo ahora.</option>
+            <option value="3">Consumí en adolescencia y nunca lo dejé.</option>
+          </select>
+          <div style="height:12px"></div>
+          <div class="center">
+            <button id="startBtn" style="width:220px">Continuar</button>
+          </div>
+        </section>
+
+        <!-- Test area -->
+        <section id="work" class="card hidden">
+          <!-- Dynamic content inserted here -->
+          <div id="workContent">
+            <h3 id="testTitle">—</h3>
+            <div id="testArea" style="margin-top:12px"></div>
+          </div>
+          <div style="margin-top:12px" class="center">
+            <button id="backToMenu" class="secondary" style="background:transparent;border:1px solid rgba(255,255,255,0.04);width:200px">Volver al menú</button>
+          </div>
+        </section>
+
+        <!-- Results aggregated -->
+        <section id="allResults" class="card hidden">
+          <h3>Resultados guardados</h3>
+          <div id="resultsList" style="display:grid;gap:10px"></div>
+          <div style="margin-top:12px" class="center">
+            <button id="exportCSV">Exportar CSV</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- RIGHT: Menu -->
+      <aside>
+        <div class="card menu" id="menuCard">
+          <h3>Menú de pruebas</h3>
+          <button data-test="test1">Prueba 1 — Memoria verbal</button>
+          <button data-test="test2">Prueba 2 — 2-Back visual</button>
+          <button data-test="test3">Prueba 3 — Recuerdo inmediato + diferido</button>
+          <button data-test="test4">Prueba 4 — Pareamiento palabra</button>
+          <button data-test="test5">Prueba 5 — Fluidez verbal</button>
+          <button data-test="test6">Prueba 6 — Definición–palabra</button>
+          <div style="height:10px"></div>
+          <button id="showResults" class="secondary">Ver resultados guardados</button>
+        </div>
+      </aside>
+    </div>
+
+    <footer>Hecho con ❤️ — Versión moderna</footer>
+  </div>
+
+<script>
+/* -------------------------------------------------------
+   App: todas las pruebas implementadas y funcionando
+   Sin inline onclick — todo encapsulado
+   ------------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- Globals / State ---------- */
+  const state = {
+    user: {name:'', age:null, group:null},
+    results: {},
+  };
+
+  // Helper
+  const el = id => document.getElementById(id);
+  const q = sel => document.querySelector(sel);
+
+  // Elements
+  const startBtn = el('startBtn');
+  const registro = el('registro');
+  const work = el('work');
+  const workTitle = el('testTitle');
+  const workArea = el('testArea');
+  const backToMenu = el('backToMenu');
+  const menuCard = el('menuCard');
+  const showResultsBtn = el('showResults');
+  const allResults = el('allResults');
+  const resultsList = el('resultsList');
+  const exportCSV = el('exportCSV');
+  const userBadge = el('userBadge');
+
+  // Register user and show menu
+  startBtn.addEventListener('click', ()=>{
+    const name = el('nom').value.trim();
+    const age = parseInt(el('ed').value);
+    const group = el('grupo').value;
+    if(!name || !age){ alert('Completa nombre y edad'); return; }
+    state.user = {name, age, group};
+    userBadge.textContent = `${name} · ${age} años`;
+    registro.classList.add('hidden');
+    work.classList.remove('hidden');
+    showMenu();
+  });
+
+  backToMenu.addEventListener('click', ()=> {
+    showMenu();
+  });
+
+  function resetWork(){
+    workTitle.textContent = '—';
+    workArea.innerHTML = '';
+  }
+
+  function showMenu(){
+    resetWork();
+    // show initial panel with menu options
+    workTitle.textContent = 'Menú de pruebas';
+    workArea.innerHTML = `<p class="small">Selecciona una prueba en el panel derecho. Aquí se cargarán las instrucciones y el test.</p>`;
+  }
+
+  // Wire menu buttons
+  menuCard.querySelectorAll('button[data-test]').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      const testId = btn.getAttribute('data-test');
+      loadTest(testId);
+    });
+  });
+
+  showResultsBtn.addEventListener('click', ()=> {
+    registro.classList.add('hidden');
+    work.classList.remove('hidden');
+    allResults.classList.remove('hidden');
+    refreshResultsList();
+  });
+
+  exportCSV.addEventListener('click', ()=> {
+    const csv = makeCSV();
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `results_${(state.user.name||'user')}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  function refreshResultsList(){
+    resultsList.innerHTML = '';
+    if(Object.keys(state.results).length===0){
+      resultsList.innerHTML = `<div class="result-bubble small">No hay resultados guardados aún.</div>`;
+      return;
+    }
+    for(const [k,v] of Object.entries(state.results)){
+      const wrap = document.createElement('div');
+      wrap.className = 'result-bubble';
+      wrap.innerHTML = `<strong>${k}</strong><div class="small" style="margin-top:6px">${JSON.stringify(v)}</div>`;
+      resultsList.appendChild(wrap);
+    }
+  }
+
+  function makeCSV(){
+    const rows = [];
+    rows.push(['user_name','age','group','test','data'].join(','));
+    for(const [test,data] of Object.entries(state.results)){
+      rows.push([escapeCSV(state.user.name), state.user.age, state.user.group, test, `"${escapeCSV(JSON.stringify(data))}"`].join(','));
+    }
+    return rows.join('\n');
+  }
+  function escapeCSV(s){ return String(s).replace(/"/g,'""'); }
+
+  /* ===========================
+     TEST 1 — Memoria verbal
+     - Show sequence of 6 numbers (6 trials)
+     - Each sequence visible for 15s, then input to type sequence (space separated)
+     - Score stored
+     =========================== */
+  function loadTest1(){
+    workTitle.textContent = 'Prueba 1 — Memoria verbal';
+    workArea.innerHTML = `
+      <div class="small">Se mostrarán secuencias numéricas. Escribe la secuencia final exactamente (separada por espacios).</div>
+      <div style="height:14px"></div>
+      <div id="t1_sequence" class="bigword">—</div>
+      <div class="status" style="margin-top:12px"><div id="t1_info">Secuencia 0/6</div><div style="flex:1"></div><div id="t1_timer" class="small"></div></div>
+      <div style="height:12px"></div>
+      <input id="t1_input" type="text" placeholder="Escribe la secuencia aquí" style="display:none">
+      <div style="height:10px"></div>
+      <div class="center"><button id="t1_send" style="display:none">Enviar respuesta</button></div>
+      <div id="t1_result" style="margin-top:12px"></div>
+    `;
+
+    // logic
+    const seqEl = el('t1_sequence');
+    const info = el('t1_info');
+    const timerEl = el('t1_timer');
+    const input = el('t1_input');
+    const sendBtn = el('t1_send');
+    const result = el('t1_result');
+
+    let trial = 0, total = 6, currentSeq = [], correct = 0;
+    let countdown;
+
+    function randSeq(){
+      return Array.from({length:6},()=>Math.floor(Math.random()*100));
+    }
+    function showTrial(){
+      trial++;
+      info.textContent = `Secuencia ${trial}/${total}`;
+      currentSeq = randSeq();
+      seqEl.textContent = currentSeq.join(' - ');
+      input.value = '';
+      input.style.display='none';
+      sendBtn.style.display='none';
+      let s=25; // ponte pilas 25s
+      timerEl.textContent = `Tiempo: ${s}s`;
+      clearInterval(countdown);
+      countdown = setInterval(()=> {
+        s--; timerEl.textContent = `Tiempo: ${s}s`;
+        if(s<=0){
+          clearInterval(countdown);
+          seqEl.textContent = '';
+          input.style.display='block';
+          sendBtn.style.display='block';
+        }
+      },1000);
+    }
+
+    sendBtn.onclick = () => {
+      const ans = input.value.trim();
+      if(ans === currentSeq.join(' ')) correct++;
+      if(trial < total) showTrial();
+      else finish();
+    };
+
+    function finish(){
+      timerEl.textContent = '';
+      seqEl.textContent = 'Prueba finalizada';
+      result.innerHTML = `<div class="result-bubble">Aciertos: <strong>${correct}/${total}</strong></div>`;
+      // save
+      state.results['Prueba1_MemoriaVerbal'] = {correct,total};
+      refreshResultsList();
+    }
+
+    // start immediately
+    showTrial();
+  }
+
+  /* ===========================
+     TEST 2 — 2-Back visual
+     - sequence of letters, press SPACE when current equals letter 2-back
+     =========================== */
+  /* ==========================
+   2-Back con tutorial visual
+   Compatible PC y Móvil
+========================== */
+/* ==========================
+   2-Back con tutorial visual + 5 ejemplos
+========================== */
+
+function loadTest2() {
+  workTitle.textContent = 'Prueba 2 — 2-Back';
+  workArea.innerHTML = `
+    <div id="t2_tutorial" class="tut-container">
+      <!-- SLIDE 1 -->
+      <div class="tut-slide active">
+        <h2>¿Qué es 2-Back?</h2>
+        <p>Verás una secuencia de letras. Pulsa "COINCIDE" cuando la letra actual sea igual a la de <strong>hace 2 posiciones</strong>.</p>
+        <p>Las letras que <strong>coincidan</strong> se mostrarán en <span style="color:green;">verde</span> durante la prueba.</p>
+        <div class="tut-demo">
+          <span>A</span><span>C</span><span>C</span>
+        </div>
+        <p class="tut-note">Aquí la tercera letra “C” coincide con la primera.</p>
+        <button class="tut-next">Siguiente</button>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="tut-slide">
+        <h2>Ejemplos interactivos</h2>
+        <p>Practica con 5 letras antes de empezar. Recuerda: las coincidencias reales se marcarán en <span style="color:green;">verde</span>.</p>
+        <div id="example_area" style="font-size:50px; margin:20px; height:60px;"></div>
+        <button id="example_next">Siguiente letra</button>
+        <p class="tut-note">Pulsa “COINCIDE” si coincide con la letra de hace 2 posiciones.</p>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="tut-slide">
+        <h2>Consejo</h2>
+        <p>No esperes a que termine la letra. Si crees que coincide, toca rápido.</p>
+        <div class="tut-demo">
+          <span>F</span><span>H</span><span>F</span>
+        </div>
+        <button id="tut_start_test">¡Entendido! Empezar</button>
+      </div>
+    </div>
+
+    <!-- AREA DEL TEST -->
+    <div id="t2_test_area" style="display:none;">
+      <div style="height:14px"></div>
+      <div id="t2_letter" class="bigword" style="
+          transition: transform .25s, color .25s;
+          font-size:64px;
+          height:80px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+      ">—</div>
+
+      <div class="status" style="margin-top:10px; display:flex;">
+        <div>Aciertos: <span id="t2_ok">0</span></div>
+        <div style="flex:1"></div>
+        <div>Errores: <span id="t2_er">0</span></div>
+      </div>
+
+      <div style="height:18px"></div>
+      <div class="center">
+        <button id="t2_press" style="
+          display:none;
+          margin-top:14px;
+          padding:16px 40px;
+          font-size:20px;
+          border-radius:14px;
+          background:#4CAF50;
+          color:white;
+          border:none;
+        ">COINCIDE</button>
+      </div>
+    </div>
+  `;
+
+  // ==========================
+  // CSS
+  // ==========================
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .tut-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+      max-width: 420px;
+      margin: auto;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    .tut-slide { display: none; }
+    .tut-slide.active { display: block; animation: fadeIn .5s; }
+    .tut-demo { font-size: 38px; letter-spacing: 14px; margin: 20px 0; font-weight: bold; }
+    .tut-note { color: #555; font-size: 14px; margin-bottom: 14px; }
+    button.tut-next, #tut_start_test, #example_next {
+      padding: 10px 18px; background: #4b8cff; border: none; color: #fff; border-radius: 10px;
+      font-size: 16px; cursor: pointer; margin-top: 12px;
+    }
+    button.tut-next:hover, #tut_start_test:hover, #example_next:hover { background: #3578ff; }
+    @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+  `;
+  document.head.appendChild(style);
+
+  // ==========================
+  // VARIABLES
+  // ==========================
+  const letters = "A B C D E F G H J K L M N P R S T".split(" ");
+  let seq = [], idx = 0, ok = 0, er = 0, running = false, timerRef;
+  const t2_letter = el("t2_letter");
+  const t2_ok = el("t2_ok");
+  const t2_er = el("t2_er");
+  const pressBtn = el("t2_press");
+  const testArea = el("t2_test_area");
+
+  // ==========================
+  // TUTORIAL + EJEMPLOS
+  // ==========================
+  function init2BackTutorial(startCallback){
+    const slides = document.querySelectorAll('#t2_tutorial .tut-slide');
+    let current = 0;
+    let exampleSeq = [];
+    let exIndex = 0;
+
+    function showSlide(i){
+      slides.forEach(s => s.classList.remove('active'));
+      slides[i].classList.add('active');
+    }
+
+    document.querySelectorAll(".tut-next").forEach(btn=>{
+      btn.onclick = ()=>{
+        current = Math.min(current+1, slides.length-1);
+        showSlide(current);
+        if(current===1) startExamples();
+      };
+    });
+
+    const exampleArea = el("example_area");
+    const exampleNext = el("example_next");
+
+    function startExamples(){
+      exampleSeq = [];
+      for(let i=0;i<5;i++) exampleSeq.push(letters[Math.floor(Math.random()*letters.length)]);
+      exIndex=0;
+      exampleArea.textContent = exampleSeq[exIndex];
+      exampleArea.style.color = "black";
+    }
+
+    exampleNext.onclick = ()=>{
+      exIndex++;
+      if(exIndex<exampleSeq.length){
+        exampleArea.textContent = exampleSeq[exIndex];
+        // Marcar coincidencia en verde si repite letra de hace 2
+        if(exIndex>=2 && exampleSeq[exIndex]===exampleSeq[exIndex-2]){
+          exampleArea.style.color = "green";
+        } else exampleArea.style.color="black";
+      } else {
+        current++;
+        showSlide(current);
+      }
+    };
+
+    document.getElementById("tut_start_test").onclick = ()=>{
+      document.getElementById("t2_tutorial").style.display = "none";
+      testArea.style.display = "block";
+      pressBtn.style.display = "inline-block";
+      startCallback(); // iniciar prueba real
+    };
+  }
+
+  // ==========================
+  // TEST REAL
+  // ==========================
+  function genSeq(n = 70) {
+    seq = [];
+    for (let i = 0; i < n; i++) {
+      seq.push(letters[Math.floor(Math.random() * letters.length)]);
+    }
+  }
+
+  function showNext() {
+    if(idx >= seq.length){
+      stopRun();
+      t2_letter.textContent = "✔️ FIN";
+      pressBtn.style.display="none";
+      return;
+    }
+    let letter = seq[idx];
+
+    // Marcar coincidencia de 2-back en verde
+    if(idx>=2 && letter===seq[idx-2]){
+      t2_letter.style.color="green";
+    } else t2_letter.style.color="black";
+
+    idx++;
+    t2_letter.style.transform="scale(0.6)";
+    setTimeout(()=>{ t2_letter.textContent=letter; t2_letter.style.transform="scale(1)"; },100);
+    running=true;
+    timerRef=setTimeout(()=>{ running=false; showNext(); },1100);
+  }
+
+  function stopRun(){ clearTimeout(timerRef); running=false; }
+
+  function userPress(){
+    if(!running) return;
+    const currentIndex = idx-1;
+    if(currentIndex>=2){
+      const target = seq[currentIndex]===seq[currentIndex-2];
+      if(target){ ok++; t2_ok.textContent=ok; flash(true); }
+      else { er++; t2_er.textContent=er; flash(false); }
+    }
+    running=false;
+    clearTimeout(timerRef);
+    setTimeout(showNext,200);
+  }
+
+  function flash(correct){ t2_letter.style.color = correct ? "#00C853" : "#FF5252";
+    setTimeout(()=>{ t2_letter.style.color="#000"; },250); }
+
+  // ==========================
+  // INICIO
+  // ==========================
+  init2BackTutorial(()=>{
+    idx=0; ok=0; er=0; t2_ok.textContent=0; t2_er.textContent=0;
+    genSeq(70);
+    showNext();
+  });
+
+  pressBtn.onclick=userPress;
+  document.addEventListener("keydown",(ev)=>{ if(ev.code==="Space"){ ev.preventDefault(); userPress(); }});
+}
+
+
+
+  /* ===========================
+     TEST 3 — Recuerdo inmediato + diferido
+     - Phase 1: show 16 words fast one by one -> enter recall
+     - Phase 2: distractor tasks (simple)
+     - Phase 3: show 19 words then delayed recall
+     - Results aggregated and saved
+     =========================== */
+  function loadTest3(){
+  /* ================================
+      CONFIGURACIÓN DE LOS MODOS
+  =================================*/
+  const MODE = "sinonimos"; 
+  // Opciones: "sinonimos", "neutras", "normal"
+
+  const SOUND_ENABLED = true; 
+  const BEEP_SRC = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg";
+
+  const playBeep = () => {
+    if(!SOUND_ENABLED) return;
+    const a = new Audio(BEEP_SRC);
+    a.volume = 0.25;
+    a.play();
+  };
+
+  /* ================================
+      BANCOS DE PALABRAS SEGÚN MODO
+  =================================*/
+
+  // 1) MODO NORMAL → GRAN BANCO ALEATORIO
+  const WORD_BANK_NORMAL = [
+    "sustancia","hotel","árbol","luz","libro","level","sol","silla","camada","agua",
+    "gato","camino","niño","luna","pájaro","cielo","bosque","nube","río","fuego",
+    "planta","cuerda","metal","tienda","posición","madera","barco","jardín","corte",
+    "piel","montaña","perro","campo","piedra","viento","arena","juego","puerta",
+    "café","techo","pared","plaza","sombra","ruido","ventana","coche","mesa","flor",
+    "casa","mar","reloj","zapato","pluma","llave","cuadro","carne","roca","tierra",
+    "trigo","caja","puente","ciudad","pasto"
+  ];
+
+  // 2) MODO SINÓNIMOS → DIFICULTAD PROGRESIVA
+  const WORD_BANK_SINONIMOS = [
+    // Nivel 1 — muy simples
+    "casa","sol","niño","cielo","perro","libro","árbol","mano",
+    // Nivel 2 — intermedias
+    "hogar","infante","domicilio","resplandor","menor","artículo","tronco","extremidad",
+    // Nivel 3 — complejas
+    "morada","luminosidad","vástago","residencia","incandescencia","descendiente",
+    "textualidad","ramificación"
+  ];
+
+  // 3) MODO NEUTRAS → NEUROPSICOLOGÍA
+  const WORD_BANK_NEUTRAS = [
+    "mesa","silla","pared","techo","lámpara","papel","caja","puerta","ventana",
+    "cuerda","metal","ladrillo","suelo","teclado","botella","tarjeta","cuchara",
+    "tenedor","tela","madera","bolsa","estante","pizarra","copo","cuadro","marca",
+    "ficha","objeto","número","forma","línea","superficie"
+  ];
+
+  // Elección del modo:
+  let WORD_BANK;
+  switch(MODE){
+    case "sinonimos": WORD_BANK = WORD_BANK_SINONIMOS; break;
+    case "neutras": WORD_BANK = WORD_BANK_NEUTRAS; break;
+    default: WORD_BANK = WORD_BANK_NORMAL;
+  }
+
+  /* ================================
+          FUNCIONES AUXILIARES
+  =================================*/
+  function shuffle(arr){
+    return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);
+  }
+
+  function randomWords(bank, qty){
+    return shuffle(bank).slice(0, qty);
+  }
+
+  function now(){ return Date.now(); }
+
+  /* ================================
+        GENERACIÓN DE PALABRAS
+  =================================*/
+  const F1 = randomWords(WORD_BANK, 16);
+  const F3 = randomWords(WORD_BANK.filter(w=>!F1.includes(w)), 19);
+
+  /* ================================
+         INTERFAZ INICIAL
+  =================================*/
+  workTitle.textContent = 'Prueba 3 — Recuerdo Inmediato + Diferido';
+  workArea.innerHTML = `
+    <div class="small">
+      <strong>Modo:</strong> ${MODE}<br>
+      • Las palabras serán aleatorias.<br>
+      • Observa atentamente cada fase.<br><br>
+      Presiona <strong>Iniciar</strong> cuando estés listo.
+    </div>
+    <div class="center" style="margin-top:15px">
+      <button id="start3" class="primary">Iniciar</button>
+    </div>
+    <div id="phaseArea"></div>
+    <div class="center" style="margin-top:14px">
+      <button id="toMenuAfter3" style="display:none">Volver al menú</button>
+    </div>
+  `;
+
+  const phaseArea = el('phaseArea');
+  const toMenu = el('toMenuAfter3');
+
+  let TIME_START = 0;
+  let TIME_END = 0;
+
+  el('start3').addEventListener('click', ()=>{
+    TIME_START = now();
+    startPhase1();
+  });
+
+
+  /* ================================
+            FASE 1 — PRESENTACIÓN
+  =================================*/
+  function startPhase1(){
+    phaseArea.innerHTML = `
+      <div class="bigword fade-in" id="showWord">—</div>
+      <div class="small">Fase 1: Observa las palabras con atención.</div>
+      <div id="timer1" class="timer"></div>
+    `;
+
+    const showWord = el('showWord');
+    const timer = el('timer1');
+
+    let i=0;
+    const ms = 3000;
+
+    function runTimer(){
+      let t = ms/1000;
+      timer.textContent = `Siguiente en: ${t}s`;
+      const ct = setInterval(()=>{
+        t--;
+        timer.textContent = `Siguiente en: ${t}s`;
+        if(t<=0) clearInterval(ct);
+      },1000);
+    }
+
+    runTimer();
+    const iv = setInterval(()=>{
+      if(i < F1.length){
+        playBeep();
+        showWord.textContent = F1[i++];
+        showWord.classList.add("pulse");
+        setTimeout(()=>showWord.classList.remove("pulse"),400);
+        runTimer();
+      } else {
+        clearInterval(iv);
+        setTimeout(showRecall1, 700);
+      }
+    }, ms);
+  }
+
+  /* ================================
+         FASE 1 — RECUERDO
+  =================================*/
+  function showRecall1(){
+    phaseArea.innerHTML = `
+      <div class="small"><strong>Fase 1:</strong> Escribe todas las palabras que recuerdes.</div>
+      <textarea id="recallF1" placeholder="Escribe aquí..."></textarea>
+      <div class="center"><button class="primary" id="saveF1">Guardar</button></div>
+    `;
+
+    el('saveF1').addEventListener('click', ()=>{
+      const raw = el('recallF1').value.toLowerCase().split(/\s|,|\n/).filter(Boolean);
+      localStorage.setItem('f1_3', JSON.stringify(raw));
+      phaseArea.innerHTML = `<div class="info fade-in">Guardado.</div>`;
+      setTimeout(startPhase2, 700);
+    });
+  }
+
+  /* ================================
+         FASE 2 — DISTRACTORES
+  =================================*/
+  function startPhase2() {
+  phaseArea.innerHTML = `
+    <div class="small"><strong>Fase 2:</strong> Distractores rápidos.</div>
+
+    <div class="dcard fancy-card fade-in">
+      <div class="q">1) Invertir <strong>123</strong> → <input id="d1" class="answer"></div>
+      <div class="q">2) <strong>12 + 7 − 5</strong> = <input id="d2" class="answer"></div>
+      <div class="q">3) Capital de Francia → <input id="d3" class="answer"></div>
+      <div class="q">4) Invertir <strong>456</strong> → <input id="d4" class="answer"></div>
+      <div class="q">5) <strong>20 − 8 + 3</strong> = <input id="d5" class="answer"></div>
+    </div>
+
+    <div class="center">
+      <button class="primary big-btn pulse" id="submitD">Enviar</button>
+    </div>
+  `;
+
+  const correct = ["321","14","parís","654","15"];
+
+  // --- Retroalimentación al escribir ---
+  document.querySelectorAll('.answer').forEach((input, i) => {
+    input.addEventListener('input', () => {
+      const val = input.value.trim().toLowerCase();
+      if (!val) {
+        input.classList.remove("ok");
+        input.classList.remove("bad");
+        return;
+      }
+      if (val === correct[i]) {
+        input.classList.add("ok");
+        input.classList.remove("bad");
+      } else {
+        input.classList.add("bad");
+        input.classList.remove("ok");
+      }
+    });
+  });
+
+  // --- Botón enviar ---
+  el('submitD').addEventListener('click', () => {
+
+    const answers = [
+      el('d1').value.trim().toLowerCase(),
+      el('d2').value.trim().toLowerCase(),
+      el('d3').value.trim().toLowerCase(),
+      el('d4').value.trim().toLowerCase(),
+      el('d5').value.trim().toLowerCase(),
+    ];
+
+    const score = answers.reduce((a,v,i)=> a + (v===correct[i] ? 1 : 0), 0);
+
+    localStorage.setItem('f2_3', score);
+
+    phaseArea.innerHTML = `
+      <div class="info fade-in success-box">
+        <h3>¡Distractores completados!</h3>
+        <p>Puntaje: <strong>${score}/5</strong></p>
+      </div>
+    `;
+
+    setTimeout(startPhase3, 1200);
+  });
+}
+
+
+  /* ================================
+           FASE 3 — PRESENTACIÓN
+  =================================*/
+  function startPhase3(){
+    phaseArea.innerHTML = `
+      <div class="bigword fade-in" id="showWord3">—</div>
+      <div class="small">Fase 3: Observa las palabras finales.</div>
+      <div id="timer3" class="timer"></div>
+    `;
+
+    const showWord3 = el('showWord3');
+    const timer = el('timer3');
+
+    let i=0;
+    const ms = 2500;
+
+    function runTimer(){
+      let t = ms/1000;
+      timer.textContent = `Siguiente en: ${t}s`;
+      const ct = setInterval(()=>{
+        t--;
+        timer.textContent = `Siguiente en: ${t}s`;
+        if(t<=0) clearInterval(ct);
+      },1000);
+    }
+
+    runTimer();
+    const iv = setInterval(()=>{
+      if(i < F3.length){
+        playBeep();
+        showWord3.textContent = F3[i++];
+        showWord3.classList.add("pulse");
+        setTimeout(()=>showWord3.classList.remove("pulse"),400);
+        runTimer();
+      } else {
+        clearInterval(iv);
+        setTimeout(showRecall3, 700);
+      }
+    }, ms);
+  }
+
+  /* ================================
+           FASE 3 — RECUERDO
+  =================================*/
+  function showRecall3(){
+    phaseArea.innerHTML = `
+      <div class="small"><strong>Fase 3:</strong> Escribe todas las palabras que recuerdes.</div>
+      <textarea id="recallF3" placeholder="Escribe aquí..."></textarea>
+      <div class="center"><button class="primary" id="sendF3">Enviar</button></div>
+    `;
+
+    el('sendF3').addEventListener('click', ()=>{
+      TIME_END = now();
+
+      const raw3 = el('recallF3').value.toLowerCase().split(/\s|,|\n/).filter(Boolean);
+
+      const aF3 = F3.filter(w => raw3.includes(w)).length;
+      const rawF1 = JSON.parse(localStorage.getItem('f1_3')||"[]");
+      const aF1 = F1.filter(w => rawF1.includes(w)).length;
+      const aF2 = parseInt(localStorage.getItem('f2_3') || 0);
+
+      /* ====================================
+              CÁLCULO DE ESTADÍSTICAS
+      =====================================*/
+      const timeMin = ((TIME_END - TIME_START)/60000).toFixed(2);
+
+      const missedF1 = F1.filter(w=>!rawF1.includes(w));
+      const missedF3 = F3.filter(w=>!raw3.includes(w));
+
+      const results = {
+        modo: MODE,
+        Fase1: aF1,
+        Fase2: aF2,
+        Fase3: aF3,
+        porcentaje_F1: Math.round((aF1/F1.length)*100),
+        porcentaje_F3: Math.round((aF3/F3.length)*100),
+        palabras_faltantes_F1: missedF1,
+        palabras_faltantes_F3: missedF3,
+        tiempo_total_min: timeMin
+      };
+
+      state.results["Prueba3_Recuerdo"] = results;
+      refreshResultsList();
+
+      phaseArea.innerHTML = `
+        <div class="result-bubble fade-in">
+          <strong>Resultados:</strong><br>
+          F1: ${aF1}/${F1.length} (${results.porcentaje_F1}%)<br>
+          F2: ${aF2}/5<br>
+          F3: ${aF3}/${F3.length} (${results.porcentaje_F3}%)<br>
+          <br>
+          <strong>Tiempo total:</strong> ${timeMin} min<br><br>
+          <strong>Faltantes F1:</strong> ${missedF1.join(", ")}<br>
+          <strong>Faltantes F3:</strong> ${missedF3.join(", ")}<br>
+        </div>
+      `;
+
+      toMenu.style.display = 'inline-block';
+    });
+  }
+
+  toMenu.onclick = () => {
+    showMenu();
+    allResults.classList.add("hidden");
+    phaseArea.innerHTML = "";
+  };
+}
+
+
+  /* ===========================
+     TEST 4 — Emparejamiento de  palabras
+     - Estudio: present pairs twice
+     - Test: present cue (p) and 4 options including correct (i)
+     =========================== */
+  function loadTest4(){
+    workTitle.textContent = 'Prueba 4 — Emparejamiento  palabra';
+    workArea.innerHTML = `
+      <div class="small">Primero estudiaremos pares (repetido 2 veces). Luego tendrás que elegir la opción correcta.</div>
+      <div style="height:10px"></div>
+      <div id="studyArea" class="bigword">—</div>
+      <div id="testArea4" style="margin-top:12px"></div>
+      <div style="height:8px"></div>
+      <div id="result4"></div>
+    `;
+
+    const pairs = [
+      {p:"ATOMO",i:"NUCLEO"},{p:"PROTEINA",i:"AMINOACIDO"},{p:"FOTOSINTESIS",i:"CLOROFILA"},
+      {p:"ECOSISTEMA",i:"BIODIVERSIDAD"},{p:"HIPOTESIS",i:"EXPERIMENTO"},{p:"ALGEBRA",i:"ECUACION"},
+      {p:"FUNCION",i:"VARIABLE"},{p:"ENERGIA",i:"TRABAJO"},{p:"FISICA",i:"MOVIMIENTO"},
+      {p:"QUIMICA",i:"REACCION"},{p:"FILOSOFIA",i:"RAZONAMIENTO"},{p:"SOCIOLOGIA",i:"SOCIEDAD"}
+    ];
+
+    const studyArea = el('studyArea');
+    const testArea4 = el('testArea4');
+    const result4 = el('result4');
+
+    // STUDY: present pairs in sequence, repeat twice
+    let idx = 0;
+    let pass = 0;
+    function studyStep(){
+      if(idx < pairs.length){
+        studyArea.textContent = `${pairs[idx].p} – ${pairs[idx].i}`;
+        idx++;
+        setTimeout(studyStep, 2000);
+      } else {
+        if(pass < 1){ pass++; idx=0; setTimeout(studyStep, 400); }
+        else {
+          // go to test
+          studyArea.textContent = 'Fin estudio';
+          setTimeout(()=> startTest(), 600);
+        }
+      }
+    }
+
+    // TEST
+    let tIndex = 0;
+    let out = [];
+    function startTest(){
+      testArea4.innerHTML = '';
+      result4.innerHTML = '';
+      showItem();
+    }
+
+    function showItem(){
+      if(tIndex >= pairs.length){
+        // finish
+        const correct = out.filter(x=>x).length;
+        result4.innerHTML = `<div class="result-bubble">Aciertos: <strong>${correct}/${pairs.length}</strong></div>`;
+        state.results['Prueba4_Pareamiento'] = {correct,total:pairs.length};
+        refreshResultsList();
+        return;
+      }
+      const cur = pairs[tIndex];
+      testArea4.innerHTML = `<div style="margin-bottom:8px"><strong>Cue:</strong> <span class="bigword">${cur.p}</span></div><div id="opts" class="ops"></div>`;
+      const optsDiv = el('opts');
+
+      // build 3 distractors
+      const distractors = pairs.filter(x => x.i !== cur.i).map(x => x.i);
+      shuffleArray(distractors);
+      const options = [cur.i, distractors[0], distractors[1], distractors[2]];
+      shuffleArray(options);
+
+      options.forEach(opt=>{
+        const b = document.createElement('button');
+        b.textContent = opt;
+        b.addEventListener('click', ()=>{
+          out.push(opt === cur.i);
+          tIndex++;
+          showItem();
+        });
+        optsDiv.appendChild(b);
+      });
+    }
+
+    studyStep();
+  }
+
+  /* ===========================
+     TEST 5 — Fluidez verbal (categorías)
+     - 60s per category, user types words, counts correct vs errors
+     =========================== */
+ function loadTest5(){
+  workTitle.textContent = 'Prueba 5 — Memoria y Fluidez';
+  workArea.innerHTML = `
+    <div class="small">Memoriza las palabras de cada categoría (cambian cada 3s). Luego tendrás que escribir todas las que recuerdes.</div>
+    <div style="height:8px"></div>
+
+    <div id="catName" class="bigword">—</div>
+    <div id="showWord" class="bigword" style="color:#3a6"></div>
+
+    <textarea id="fv_input" placeholder="Escribe aquí lo que recuerdes" style="margin-top:12px; display:none;"></textarea>
+    <div style="height:8px" class="center"><button id="fv_submit" style="display:none;">Enviar</button></div>
+
+    <div id="fv_info" class="small" style="margin-top:8px"></div>
+    <div id="fv_result" style="margin-top:12px"></div>
+  `;
+
+const categories = [
+  {
+    n:'Animales',
+    l:[
+      'perro','gato','elefante','tigre','leon','raton','vaca','caballo','oveja','cerdo',
+      'jirafa','canguro','hipopotamo','rinoceronte','lobo','zorro','panda','delfin','camello','mono'
+    ]
+  },
+  {
+    n:'Frutas',
+    l:[
+      'manzana','pera','platano','naranja','sandia','kiwi','uva','fresa','melon','cereza',
+      'mango','papaya','piña','durazno','maracuya','frambuesa','arandano','limon','mandarina','ciruela'
+    ]
+  },
+  {
+    n:'Muebles',
+    l:[
+      'silla','mesa','sofa','cama','armario','escritorio','estanteria','taburete','comoda','butaca',
+      'vitrina','aparador','tocador','cabecero','sinfonier','banqueta','mesilla','perchero','zapatero','trinchador'
+    ]
+  }
+];
+
+
+  let idx = 0;
+  let results = [];
+
+  const catName = el('catName');
+  const showWord = el('showWord');
+  const input = el('fv_input');
+  const submit = el('fv_submit');
+  const info = el('fv_info');
+  const result = el('fv_result');
+
+  let timer;       // cuenta atrás
+  let rotation;    // rotación de palabras
+
+  // Función para mezclar elementos (Fisher–Yates)
+  function shuffle(arr){
+    let a = [...arr];
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startCategory(){
+    if(idx >= categories.length){
+      result.innerHTML = results.map(r =>
+        `<div class="result-bubble">
+           <b>${r.category}</b><br>
+           Correctas: ${r.correct}<br>
+           Errores: ${r.errors}<br>
+           Perseveraciones: ${r.persever}<br>
+           Palabras válidas: ${categories.find(c => c.n === r.category).l.join(', ')}
+         </div>`
+      ).join('');
+      state.results['Prueba5_Fluidez'] = results;
+      refreshResultsList();
+      return;
+    }
+
+    const cat = categories[idx];
+    catName.textContent = `Categoría: ${cat.n}`;
+    showWord.textContent = 'Prepárate…';
+    input.style.display = 'none';
+    submit.style.display = 'none';
+    input.value = '';
+
+    // Mezclar las palabras para que no se repitan
+    let words = shuffle(cat.l);
+    let i = 0;
+
+    clearInterval(rotation);
+    rotation = setInterval(() => {
+      if(i < words.length){
+        showWord.textContent = words[i];
+        i++;
+      } else {
+        // si ya las mostró todas, se queda en la última sin repetir
+        clearInterval(rotation);
+      }
+    }, 3000);
+
+    let s = 60;
+    info.textContent = `Memorizando: 60s`;
+
+    clearInterval(timer);
+    timer = setInterval(()=>{
+      s--;
+      info.textContent = `Memorizando: ${s}s`;
+
+      if(s <= 0){
+        clearInterval(timer);
+        clearInterval(rotation);
+        showWord.textContent = '';
+        askUser(cat);
+      }
+    }, 1000);
+  }
+
+  function askUser(cat){
+    info.textContent = 'Escribe todo lo que recuerdes y presiona Enviar.';
+    input.style.display = 'block';
+    submit.style.display = 'block';
+
+    submit.onclick = ()=>{
+      const words = input.value.toLowerCase().split(/\W+/).filter(Boolean);
+      const unique = [...new Set(words)];
+
+      const correct = unique.filter(w => cat.l.includes(w)).length;
+      const errors = unique.length - correct;
+      const persever = words.length - unique.length;
+
+      results.push({category:cat.n, correct, errors, persever});
+      idx++;
+      setTimeout(startCategory, 700);
+    };
+  }
+
+  startCategory();
+}
+
+
+  /* ===========================
+     TEST 6 — Definición–Palabra (multiple choice)
+     =========================== */
+  function loadTest6(){
+    workTitle.textContent = 'Prueba 6 — Definición–Palabra';
+    workArea.innerHTML = `
+      <div class="small">Lee la definición y elige la palabra que mejor la represente.</div>
+      <div style="height:10px"></div>
+      <div id="defArea"></div>
+      <div id="defResult" style="margin-top:10px"></div>
+    `;
+
+        const items = [
+      {d:"Disciplina que examina las particularidades conductuales de la especie humana.",o:["Antropólogo","Psicopedagogo","Sociológo","Etnógrafo"],c:"Antropólogo"},
+      {d:"Rama reflexiva que estudia aquello que está más allá de lo físico y verificable.",o:["Metafísica","Ontología","Hermenéutica","Epistemología"],c:"Metafísica"},
+      {d:"Término que expresa oposición semántica respecto a otro.",o:["Antónimo","Parónimo","Homónimo","Heterónimo"],c:"Antónimo"},
+      {d:"Estudio que intenta explicar la configuración y procedencia del conjunto cósmico.",o:["Cosmología","Astrofísica","Geodesia","Etnología"],c:"Cosmología"},
+      {d:"Conjunto estructurado de principios que regulan el uso adecuado de un idioma.",o:["Gramática","Sintaxis","Morfología","Lingüística"],c:"Gramática"},
+      {d:"Estado de tranquilidad interna que se mantiene incluso en ausencia de estímulos.",o:["Plenitud","Quietud","Ataraxia","Moderación"],c:"Plenitud"},
+      {d:"Campo que investiga la interpretación conceptual de los signos lingüísticos.",o:["Semántica","Pragmática","Semiología","Sintaxis"],c:"Semántica"},
+      {d:"Persona que registra y organiza los acontecimientos de la vida de otros.",o:["Biógrafo","Cronista","Archivista","Narrador"],c:"Biógrafo"},
+      {d:"Recurso expresivo que atribuye características humanas a lo que no lo es.",o:["Personificación","Metáfora","Prosopopeya","Alegoría"],c:"Personificación"},
+      {d:"Organismo cuya dieta se basa fundamentalmente en materia vegetal.",o:["Herbívoro","Frugívoro","Folívoro","Granívoro"],c:"Herbívoro"},
+      {d:"Variación heredable dentro de una especie causada por modificaciones genéticas pequeñas.",o:["Microevolución","Mutagénesis","Deriva genética","Filogénesis"],c:"Microevolución"},
+      {d:"Estudio de cómo influyen los grupos y contextos sociales en el uso del lenguaje.",o:["Sociolingüística","Psicolingüística","Dialectología","Etnolingüística"],c:"Sociolingüística"},
+      {d:"Disciplina dedicada a descifrar y analizar escrituras antiguas o poco comunes.",o:["Paleografía","Epigrafía","Iconografía","Grafología"],c:"Paleografía"},
+      {d:"Doctrina que afirma que el conocimiento surge principalmente de la experiencia sensible.",o:["Empirismo","Racionalismo","Positivismo","Escepticismo"],c:"Empirismo"},
+      {d:"Estructura de razonamiento utilizada para derivar conclusiones a partir de premisas.",o:["Silogismo","Axioma","Teorema","Paradoja"],c:"Silogismo"}
+    ];
+
+
+    let idx = 0, correct = 0;
+
+    function showItem(){
+      if(idx >= items.length){
+        el('defResult').innerHTML = `<div class="result-bubble">Aciertos: <strong>${correct}/${items.length}</strong></div>`;
+        state.results['Prueba6_Definicion'] = {correct, total: items.length};
+        refreshResultsList();
+        return;
+      }
+      const it = items[idx];
+      const shuffled = it.o.slice().sort(()=>Math.random()-0.5);
+      el('defArea').innerHTML = `<div><strong>Definición:</strong> ${it.d}</div><div style="height:10px"></div><div id="defOpts" class="ops"></div>`;
+      const defOpts = el('defOpts');
+      defOpts.innerHTML = '';
+      shuffled.forEach(opt=>{
+        const b = document.createElement('button');
+        b.textContent = opt;
+        b.addEventListener('click', ()=>{
+          if(opt === it.c) correct++;
+          idx++;
+          showItem();
+        });
+        defOpts.appendChild(b);
+      });
+    }
+
+    showItem();
+  }
+
+  /* ---------- Utilities ---------- */
+  function loadTest(id){
+    // hide results panel
+    allResults.classList.add('hidden');
+    resetWork();
+    switch(id){
+      case 'test1': loadTest1(); break;
+      case 'test2': loadTest2(); break;
+      case 'test3': loadTest3(); break;
+      case 'test4': loadTest4(); break;
+      case 'test5': loadTest5(); break;
+      case 'test6': loadTest6(); break;
+      default: showMenu();
+    }
+  }
+
+  // expose loadTest to menu interactions
+  window.loadTest = loadTest;
+
+  // Utility: shuffle
+  function shuffleArray(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+  // initialize: show menu-like view
+  showMenu();
+
+}); // DOMContentLoaded end
+</script>
+</body>
+</html>
